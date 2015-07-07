@@ -15,4 +15,6 @@
     <color name="black_alpha">#42000000</color>
 
     <!-- Others -->
+    <color name="teal500">#009688</color>
+    <color name="deep_orange500">#FF5722</color>
 </resources>

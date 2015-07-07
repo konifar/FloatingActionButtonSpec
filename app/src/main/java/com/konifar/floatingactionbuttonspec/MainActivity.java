@@ -40,10 +40,12 @@ public class MainActivity extends BaseActivity {
             case 1:
                 break;
             case 2:
+                AnimateInOutActivity.start(this, title);
                 break;
             case 3:
                 break;
             case 4:
+                TabSwipeAnimationActivity.start(this, title);
                 break;
             case 5:
                 break;

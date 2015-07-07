@@ -23,7 +23,17 @@
         </activity>
 
         <activity
+            android:name=".AnimateInOutActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="@string/app_name" />
+
+        <activity
             android:name=".SelectedStateActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name=".TabSwipeAnimationActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" />
 

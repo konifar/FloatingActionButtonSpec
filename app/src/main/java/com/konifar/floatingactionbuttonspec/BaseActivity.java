@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -27,6 +28,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (title != null && bar != null) bar.setTitle(title);
 
         initView();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     abstract int getLayoutResId();

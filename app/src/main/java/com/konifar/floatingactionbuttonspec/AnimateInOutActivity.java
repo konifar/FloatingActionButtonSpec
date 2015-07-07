@@ -4,26 +4,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
+import android.view.View;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class SelectedStateActivity extends BaseActivity {
+public class AnimateInOutActivity extends BaseActivity {
 
     @InjectView(R.id.fab)
     FloatingActionButton fab;
 
-    private boolean fabSelected;
-
     public static void start(Context context, String title) {
-        Intent intent = new Intent(context, SelectedStateActivity.class);
+        Intent intent = new Intent(context, AnimateInOutActivity.class);
         intent.putExtra(EXTRA_TITLE, title);
         context.startActivity(intent);
     }
 
     @Override
     int getLayoutResId() {
-        return R.layout.activity_selected_state;
+        return R.layout.activity_animate_in_out;
     }
 
     @Override
@@ -34,14 +33,14 @@ public class SelectedStateActivity extends BaseActivity {
 
     @OnClick(R.id.fab)
     void onClickFab() {
-        if (fabSelected) {
-            FabAnimationUtil.rotateToUnSelect(fab);
-        } else {
-            FabAnimationUtil.rotateToSelect(fab);
+        FabAnimationUtil.animateOut(fab);
+    }
+
+    @OnClick(R.id.root)
+    void onClickRoot() {
+        if (fab.getVisibility() == View.GONE) {
+            FabAnimationUtil.animateIn(fab);
         }
-        fab.setPressed(fabSelected);
-        fab.jumpDrawablesToCurrentState();
-        fabSelected = !fabSelected;
     }
 
 }
