@@ -1,23 +1,53 @@
 package com.konifar.floatingactionbuttonspec;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnItemClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    @InjectView(R.id.toolbar)
-    Toolbar toolbar;
+    @InjectView(R.id.list_view)
+    ListView listView;
+
+    private String[] titles = {
+            "Selected state",
+            "With counter",
+            "Animate in",
+            "Change view",
+            "Tab swipe animation"
+    };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
-        setSupportActionBar(toolbar);
+    int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.item_title, titles);
+        listView.setAdapter(adapter);
+    }
+
+    @OnItemClick(R.id.list_view)
+    public void onItemClickListView(int position) {
+        String title = titles[position];
+        switch (position) {
+            case 0:
+                SelectedStateActivity.start(this, title);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
     }
 
 }
