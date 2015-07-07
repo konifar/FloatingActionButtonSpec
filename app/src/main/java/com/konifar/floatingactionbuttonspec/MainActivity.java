@@ -1,5 +1,11 @@
 package com.konifar.floatingactionbuttonspec;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -7,6 +13,8 @@ import butterknife.InjectView;
 import butterknife.OnItemClick;
 
 public class MainActivity extends BaseActivity {
+
+    private static final String SPEC_URL = "http://www.google.com/design/spec/components/buttons-floating-action-button.html#";
 
     @InjectView(R.id.list_view)
     ListView listView;
@@ -18,6 +26,14 @@ public class MainActivity extends BaseActivity {
             "Transform to bar",
             "Fling out buttons"
     };
+
+    public static void showWebPage(String url, Context context) {
+        if (TextUtils.isEmpty(url)) return;
+
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
+    }
 
     @Override
     int getLayoutResId() {
@@ -50,6 +66,25 @@ public class MainActivity extends BaseActivity {
                 FlingOutButtonsActivity.start(this, title);
                 break;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_link:
+                showWebPage(SPEC_URL, this);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
