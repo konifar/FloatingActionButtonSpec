@@ -43,4 +43,15 @@
         <item name="android:ellipsize">end</item>
     </style>
 
+    <style name="BaseListView">
+        <item name="android:clipToPadding">false</item>
+        <item name="android:divider">@color/grey200</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:footerDividersEnabled">false</item>
+        <item name="android:listSelector">@drawable/bg_feedback</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:scrollingCache">false</item>
+    </style>
+
 </resources>
