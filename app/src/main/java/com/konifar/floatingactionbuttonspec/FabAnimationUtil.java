@@ -43,17 +43,21 @@ public class FabAnimationUtil {
     }
 
     public static void animateIn(final FloatingActionButton fab) {
-        animateIn(fab, null);
+        animateIn(fab, DEFAULT_DURATION, null);
     }
 
-    public static void animateIn(final FloatingActionButton fab, final AnimateCallback callback) {
+    public static void animateInFast(final FloatingActionButton fab, final AnimateCallback callback) {
+        animateIn(fab, 100L, callback);
+    }
+
+    public static void animateIn(final FloatingActionButton fab, long duration, final AnimateCallback callback) {
         fab.setVisibility(View.VISIBLE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             ViewCompat.animate(fab)
                     .scaleX(1.0F)
                     .scaleY(1.0F)
                     .alpha(1.0F)
-                    .setDuration(DEFAULT_DURATION)
+                    .setDuration(duration)
                     .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
                     .withLayer()
                     .setListener(new ViewPropertyAnimatorListener() {
@@ -71,7 +75,7 @@ public class FabAnimationUtil {
                     }).start();
         } else {
             Animation anim = AnimationUtils.loadAnimation(fab.getContext(), R.anim.fab_in);
-            anim.setDuration(200L);
+            anim.setDuration(duration);
             anim.setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR);
             anim.setAnimationListener(new AnimationListenerAdapter() {
                 public void onAnimationStart(Animation animation) {
@@ -88,16 +92,24 @@ public class FabAnimationUtil {
     }
 
     public static void animateOut(final FloatingActionButton fab) {
-        animateOut(fab, null);
+        animateOut(fab, DEFAULT_DURATION, null);
+    }
+
+    public static void animateOutFast(final FloatingActionButton fab, final AnimateCallback callback) {
+        animateOut(fab, 30L, callback);
     }
 
     public static void animateOut(final FloatingActionButton fab, final AnimateCallback callback) {
+        animateOut(fab, DEFAULT_DURATION, callback);
+    }
+
+    public static void animateOut(final FloatingActionButton fab, long duration, final AnimateCallback callback) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             ViewCompat.animate(fab)
                     .scaleX(0.0F)
                     .scaleY(0.0F).alpha(0.0F)
                     .setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR)
-                    .setDuration(DEFAULT_DURATION)
+                    .setDuration(duration)
                     .withLayer()
                     .setListener(new ViewPropertyAnimatorListener() {
                         public void onAnimationStart(View view) {
@@ -115,7 +127,7 @@ public class FabAnimationUtil {
         } else {
             Animation anim = AnimationUtils.loadAnimation(fab.getContext(), R.anim.fab_out);
             anim.setInterpolator(FAST_OUT_SLOW_IN_INTERPOLATOR);
-            anim.setDuration(200L);
+            anim.setDuration(duration);
             anim.setAnimationListener(new AnimationListenerAdapter() {
                 public void onAnimationStart(Animation animation) {
                     if (callback != null) callback.onAnimationStart();

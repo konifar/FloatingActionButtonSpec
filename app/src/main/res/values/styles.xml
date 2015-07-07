@@ -61,4 +61,9 @@
         <item name="android:layout_marginBottom">0dp</item>
     </style>
 
+    <style name="FabMiniMargin">
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">-24dp</item>
+    </style>
+
 </resources>

@@ -38,7 +38,7 @@ public class AnimateInOutActivity extends BaseActivity {
 
     @OnClick(R.id.root)
     void onClickRoot() {
-        if (fab.getVisibility() == View.GONE) {
+        if (fab.getVisibility() == View.INVISIBLE) {
             FabAnimationUtil.animateIn(fab);
         }
     }

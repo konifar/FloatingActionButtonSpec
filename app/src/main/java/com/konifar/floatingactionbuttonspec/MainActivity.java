@@ -15,7 +15,8 @@ public class MainActivity extends BaseActivity {
             "Selected state",
             "Animate in",
             "Tab swipe animation",
-            "Transform to bar"
+            "Transform to bar",
+            "Fling out buttons"
     };
 
     @Override
@@ -44,6 +45,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case 3:
                 TransformToBarActivity.start(this, title);
+                break;
+            case 4:
+                FlingOutButtonsActivity.start(this, title);
                 break;
         }
     }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:elevation="4dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mini_5"
+            style="@style/FabMiniMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_mini_4"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_email_grey_600_24dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mini_4"
+            style="@style/FabMiniMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_mini_3"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_mic_grey_600_24dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mini_3"
+            style="@style/FabMiniMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_mini_2"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_phone_grey_600_24dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mini_2"
+            style="@style/FabMiniMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab_mini_1"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_radio_grey_600_24dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_mini_1"
+            style="@style/FabMiniMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fab"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_tv_grey_600_24dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            style="@style/FabMargin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_plus_white_24dp"
+            app:borderWidth="0dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
