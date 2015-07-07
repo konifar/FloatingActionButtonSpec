@@ -37,6 +37,11 @@
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name" />
 
+        <activity
+            android:name=".TransformToBarActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="@string/app_name" />
+
     </application>
 
 </manifest>

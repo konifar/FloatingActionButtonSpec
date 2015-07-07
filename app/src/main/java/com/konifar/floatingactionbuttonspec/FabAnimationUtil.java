@@ -1,17 +1,25 @@
 package com.konifar.floatingactionbuttonspec;
 
+import android.animation.Animator;
+import android.content.Context;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.PropertyValuesHolder;
+
+import io.codetail.animation.SupportAnimator;
 
 public class FabAnimationUtil {
 
@@ -100,7 +108,7 @@ public class FabAnimationUtil {
                         }
 
                         public void onAnimationEnd(View view) {
-                            view.setVisibility(View.GONE);
+                            view.setVisibility(View.INVISIBLE);
                             if (callback != null) callback.onAnimationEnd();
                         }
                     }).start();
@@ -114,7 +122,7 @@ public class FabAnimationUtil {
                 }
 
                 public void onAnimationEnd(Animation animation) {
-                    fab.setVisibility(View.GONE);
+                    fab.setVisibility(View.INVISIBLE);
                     if (callback != null) callback.onAnimationEnd();
                 }
             });
@@ -122,10 +130,248 @@ public class FabAnimationUtil {
         }
     }
 
+    public static void moveIn(final FloatingActionButton fab, View view, ViewPropertyAnimatorListener listener) {
+        int marginRight;
+        int marginBottom;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            marginRight = 16;
+            marginBottom = 16;
+        } else {
+            marginRight = 8;
+            marginBottom = 0;
+        }
+        ViewCompat.animate(fab)
+                .translationX(-(view.getWidth() / 2) + (fab.getWidth() / 2) + dpToPx(view.getContext(), marginRight))
+                .translationY(-(view.getHeight() / 2) + (fab.getHeight() / 2) + dpToPx(view.getContext(), marginBottom))
+                .setInterpolator(new AccelerateInterpolator())
+                .setDuration(150L)
+                .withLayer()
+                .setListener(listener)
+                .start();
+    }
+
+    public static void moveOut(final FloatingActionButton fab, ViewPropertyAnimatorListener listener) {
+        ViewCompat.animate(fab)
+                .translationX(0)
+                .translationY(0)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .setDuration(150L)
+                .withLayer()
+                .setListener(listener)
+                .start();
+    }
+
+
+    public static void transformIn(final FloatingActionButton fab, final View transformView) {
+        moveIn(fab, transformView, new ViewPropertyAnimatorListener() {
+            @Override
+            public void onAnimationStart(View view) {
+            }
+
+            @Override
+            public void onAnimationEnd(View view) {
+                revealOn(fab, transformView, new RevealCallback() {
+                    @Override
+                    public void onRevealStart() {
+                        fab.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onRevealEnd() {
+                    }
+                });
+            }
+
+            @Override
+            public void onAnimationCancel(View view) {
+            }
+        });
+    }
+
+    public static void transformOut(final FloatingActionButton fab, final View transformView) {
+        revealOff(fab, transformView, new RevealCallback() {
+            @Override
+            public void onRevealStart() {
+            }
+
+            @Override
+            public void onRevealEnd() {
+                moveOut(fab, new ViewPropertyAnimatorListener() {
+                    @Override
+                    public void onAnimationStart(View view) {
+                        fab.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(View view) {
+                    }
+
+                    @Override
+                    public void onAnimationCancel(View view) {
+                    }
+                });
+            }
+        });
+    }
+
+    public static void revealOn(final FloatingActionButton fab, View transformView, final RevealCallback callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Animator animator = ViewAnimationUtils.createCircularReveal(
+                    transformView,
+                    transformView.getWidth() / 2,
+                    transformView.getHeight() / 2,
+                    fab.getWidth(),
+                    (float) Math.hypot(transformView.getWidth(), transformView.getHeight()));
+            transformView.setVisibility(View.VISIBLE);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    callback.onRevealStart();
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    callback.onRevealEnd();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+            if (transformView.getVisibility() == View.VISIBLE) {
+                animator.setDuration(350);
+                animator.start();
+                transformView.setEnabled(true);
+            }
+        } else {
+            SupportAnimator animator =
+                    io.codetail.animation.ViewAnimationUtils.createCircularReveal(
+                            transformView,
+                            transformView.getWidth() / 2,
+                            transformView.getHeight() / 2,
+                            fab.getWidth(),
+                            (float) Math.hypot(transformView.getWidth(), transformView.getHeight()));
+            transformView.setVisibility(View.VISIBLE);
+            animator.setInterpolator(new AccelerateDecelerateInterpolator());
+            animator.addListener(new io.codetail.animation.SupportAnimator.AnimatorListener() {
+                @Override
+                public void onAnimationStart() {
+                    callback.onRevealStart();
+                }
+
+                @Override
+                public void onAnimationEnd() {
+                    callback.onRevealEnd();
+                }
+
+                @Override
+                public void onAnimationCancel() {
+                }
+
+                @Override
+                public void onAnimationRepeat() {
+                }
+            });
+            if (transformView.getVisibility() == View.VISIBLE) {
+                animator.setDuration(350);
+                animator.start();
+                transformView.setEnabled(true);
+            }
+        }
+    }
+
+    public static void revealOff(final FloatingActionButton fab, final View transformView, final RevealCallback callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            SupportAnimator animator =
+                    io.codetail.animation.ViewAnimationUtils.createCircularReveal(
+                            transformView,
+                            transformView.getWidth() / 2,
+                            transformView.getHeight() / 2,
+                            (float) Math.hypot(transformView.getWidth(), transformView.getHeight()),
+                            fab.getWidth());
+            animator.setInterpolator(new AccelerateInterpolator());
+            animator.addListener(new io.codetail.animation.SupportAnimator.AnimatorListener() {
+                @Override
+                public void onAnimationStart() {
+                    callback.onRevealStart();
+                }
+
+                @Override
+                public void onAnimationEnd() {
+                    transformView.setVisibility(View.INVISIBLE);
+                    callback.onRevealEnd();
+                }
+
+                @Override
+                public void onAnimationCancel() {
+                }
+
+                @Override
+                public void onAnimationRepeat() {
+                }
+            });
+            if (transformView.getVisibility() == View.VISIBLE) {
+                animator.setDuration(350);
+                animator.start();
+                transformView.setEnabled(true);
+            }
+        } else {
+            SupportAnimator animator =
+                    io.codetail.animation.ViewAnimationUtils.createCircularReveal(
+                            transformView,
+                            transformView.getWidth() / 2,
+                            transformView.getHeight() / 2,
+                            (float) Math.hypot(transformView.getWidth(), transformView.getHeight()),
+                            fab.getWidth());
+            animator.setInterpolator(new AccelerateInterpolator());
+            animator.addListener(new io.codetail.animation.SupportAnimator.AnimatorListener() {
+                @Override
+                public void onAnimationStart() {
+                    callback.onRevealStart();
+                }
+
+                @Override
+                public void onAnimationEnd() {
+                    transformView.setVisibility(View.INVISIBLE);
+                    callback.onRevealEnd();
+                }
+
+                @Override
+                public void onAnimationCancel() {
+                }
+
+                @Override
+                public void onAnimationRepeat() {
+                }
+            });
+            if (transformView.getVisibility() == View.VISIBLE) {
+                animator.setDuration(350);
+                animator.start();
+                transformView.setEnabled(true);
+            }
+        }
+    }
+
+    public static float dpToPx(Context context, float value) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,
+                context.getResources().getDisplayMetrics());
+    }
+
     public interface AnimateCallback {
         public void onAnimationStart();
 
         public void onAnimationEnd();
+    }
+
+    public interface RevealCallback {
+        public void onRevealStart();
+
+        public void onRevealEnd();
     }
 
     static class AnimationListenerAdapter implements Animation.AnimationListener {

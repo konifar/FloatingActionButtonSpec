@@ -24,4 +24,7 @@
     <!-- Radius -->
     <dimen name="radius_medium">4dp</dimen>
 
+    <!-- Component -->
+    <dimen name="footer">64dp</dimen>
+
 </resources>

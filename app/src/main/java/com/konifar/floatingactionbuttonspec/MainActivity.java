@@ -13,10 +13,9 @@ public class MainActivity extends BaseActivity {
 
     private String[] titles = {
             "Selected state",
-            "With counter",
             "Animate in",
-            "Change view",
-            "Tab swipe animation"
+            "Tab swipe animation",
+            "Transform to bar"
     };
 
     @Override
@@ -38,16 +37,13 @@ public class MainActivity extends BaseActivity {
                 SelectedStateActivity.start(this, title);
                 break;
             case 1:
-                break;
-            case 2:
                 AnimateInOutActivity.start(this, title);
                 break;
-            case 3:
-                break;
-            case 4:
+            case 2:
                 TabSwipeAnimationActivity.start(this, title);
                 break;
-            case 5:
+            case 3:
+                TransformToBarActivity.start(this, title);
                 break;
         }
     }
